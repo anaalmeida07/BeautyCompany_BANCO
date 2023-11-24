@@ -6,20 +6,37 @@
 package Model.DAO;
 
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.DAO.Conexao;
 import model.Usuario;
+import view.Login;
 
 /**
  *
  * @author tiago
  */
 public class UsuarioDAO {
+    private final Connection connection;
+
+    public UsuarioDAO(Connection connection) {
+        this.connection = connection;
+    }
     
     /**
      * Insere um usuario dentro do banco de dados
      * @param usuario exige que seja passado um objeto do tipo usuario
      */
-    public void insert(Usuario usuario){
+    public void insert(Usuario usuario) throws SQLException{
+            String sql = "insert into usuario(usuario,senha) values ('"+ usuario.getNome()+"', '"+ usuario.getSenha()+"');";
+            
+            PreparedStatement statment = connection.prepareStatement(sql);
+            statment.execute();
+            connection.close();
         Banco.usuario.add(usuario);
     }
     

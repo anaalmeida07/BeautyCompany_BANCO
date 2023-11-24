@@ -47,6 +47,11 @@ abstract public class Pessoa {
         this.rg = rg;
     }
 
+    public Pessoa(String nome) {
+        this.nome = nome;
+    }
+
+    
     public int getId() {
         return id;
     }

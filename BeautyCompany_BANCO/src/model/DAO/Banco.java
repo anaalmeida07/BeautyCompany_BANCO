@@ -16,7 +16,7 @@ import model.Usuario;
  * @author tiago
  */
 public class Banco {
-    
+    /*Data access object - DAO */
     public static ArrayList<Usuario> usuario;
     public static ArrayList<Cliente> cliente;
     public static ArrayList<Servico> servico;

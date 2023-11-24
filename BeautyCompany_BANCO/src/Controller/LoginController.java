@@ -6,6 +6,7 @@ package Controller;
 
 import Controller.Helper.LoginHelper;
 import Model.DAO.UsuarioDAO;
+import java.sql.Connection;
 import model.Usuario;
 import view.Login;
 import view.MenuPrincipal;
@@ -22,6 +23,7 @@ public class LoginController {
 
     private final Login view;
     private LoginHelper helper;
+    private Connection connection;
     //responsavel pela view de login
     public LoginController(Login view) {
         this.view = view; //acessivel de qualquer lugar da classe
@@ -34,7 +36,7 @@ public class LoginController {
         //Pega um usuario da view
        Usuario usuario = helper.obterModelo();
         //pesquisa o usuario no banco
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
         Usuario usuarioAutenticado = usuarioDAO.selectPorNomeESenha(usuario);
         //se o usuario da view tiver o mesmo usuario e senha que o usuario vindo do banco, redireciona pro menu principal
         if(usuarioAutenticado != null){
@@ -51,10 +53,6 @@ public class LoginController {
         
     }
     
-   /* public void fizTarefa(){
-        System.out.print("Busquei algo do BD");
-        this.view.exibeMensagem("Executei o fiz Tarefa");
-    }
-    */
+  
     
 }

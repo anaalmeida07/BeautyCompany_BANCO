@@ -7,9 +7,18 @@ package view;
 
 import Controller.LoginController;
 import Model.DAO.Banco;
+import Model.DAO.UsuarioDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import model.DAO.Conexao;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import model.Usuario;
+
 
 /**
  *
@@ -42,8 +51,8 @@ public class Login extends javax.swing.JFrame {
         TextSenha = new javax.swing.JPasswordField();
         UsuarioField = new javax.swing.JLabel();
         SenhaField = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        Painel = new javax.swing.JLabel();
+        entrar = new javax.swing.JButton();
+        fundo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -74,23 +83,23 @@ public class Login extends javax.swing.JFrame {
         SenhaField.setText("Senha");
         getContentPane().add(SenhaField, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 490, 70, 20));
 
-        jButton1.setBackground(new java.awt.Color(254, 254, 250));
-        jButton1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jButton1.setText("Entrar");
-        jButton1.setBorderPainted(false);
-        jButton1.setContentAreaFilled(false);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        entrar.setBackground(new java.awt.Color(254, 254, 250));
+        entrar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        entrar.setText("Entrar");
+        entrar.setBorderPainted(false);
+        entrar.setContentAreaFilled(false);
+        entrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                entrarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 570, 120, 30));
+        getContentPane().add(entrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 570, 120, 30));
 
-        Painel.setBackground(new java.awt.Color(254, 254, 250));
-        Painel.setForeground(new java.awt.Color(254, 254, 250));
-        Painel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/loginBeautyComp.png"))); // NOI18N
-        Painel.setText("jLabel2");
-        getContentPane().add(Painel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 1280, 670));
+        fundo.setBackground(new java.awt.Color(254, 254, 250));
+        fundo.setForeground(new java.awt.Color(254, 254, 250));
+        fundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view/imagens/loginBeautyComp.png"))); // NOI18N
+        fundo.setText("jLabel2");
+        getContentPane().add(fundo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 1280, 670));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -112,11 +121,25 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextUsuarioActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarActionPerformed
         // executar  quando clicar no botão
         this.controller.entrarNoSistema();
+        String usuario = TextUsuario.getText();
+        String senha = TextSenha.getText();
+        Usuario usuario1 = new Usuario(usuario, senha);
+        
+        Connection conexao;
+        try {
+            conexao = new Conexao().getConnection();
+            UsuarioDAO usuarioDao = new UsuarioDAO(conexao);
+            usuarioDao.insert(usuario1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_entrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,12 +177,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Painel;
     private javax.swing.JLabel SenhaField;
     private javax.swing.JPasswordField TextSenha;
     private javax.swing.JTextField TextUsuario;
     private javax.swing.JLabel UsuarioField;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton entrar;
+    private javax.swing.JLabel fundo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
